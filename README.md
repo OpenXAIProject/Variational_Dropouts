@@ -27,13 +27,12 @@ datasets, on which it obtains significantly more compact networks than baseline
 methods, with consistent accuracy improvements over the base networks.
 
 ## Prerequsites
-Python 2.7
-Tensorflow >= 1.10
+Python 2.7, Tensorflow >= 1.10
 
 ## Getting Started
 
-Step 1. Download MNIST, CIFAR-10, CIFAR-100
-Step 2. Edit src/utils/paths.py
+Step 1. Download MNIST, CIFAR-10, CIFAR-100 <br />
+Step 2. Edit src/utils/paths.py <br />
 
 ```bash
 $ cd /src/experiments
