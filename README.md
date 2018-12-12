@@ -3,6 +3,32 @@
 ### **CONTENT**
 > A Library for Variational Dropouts including Generalized Dropout, Concrete Dropout,
 > Beta-Bernoullid Dropout, etc.
+
++ Juho Lee (AITRICS), Saehoon Kim (AITRICS), Jaehoon Yoon (KAIST), Haebeom Lee (KAIST), Eunho Yang (KAIST), Sung Ju Hwang (KAIST)
+
+<b> Update (December 12, 2018)</b> TensorFlow implementation of
+[Adaptive Network Sparsification via Dependent Variational Beta-Benoulli Dropout]
+(https://openreview.net/pdf?id=SylU3jC5Y7)
+
+## Abstract
+
+While variational dropout approaches have been shown to be effective for network
+sparsification, they are still suboptimal in the sense that they set the dropout rate for
+each neuron without consideration of the input data. With such input-independent
+dropout, each neuron is evolved to be generic across inputs, which makes it difficult
+to sparsify networks without accuracy loss. To overcome this limitation, we propose
+adaptive variational dropout whose probabilities are drawn from sparsity-inducing
+beta-Bernoulli prior. It allows each neuron to be evolved either to be generic or
+specific for certain inputs, or dropped altogether. Such input-adaptive sparsityinducing
+dropout allows the resulting network to tolerate larger degree of sparsity
+without losing its expressive power by removing redundancies among features.
+We validate our dependent variational beta-Bernoulli dropout on multiple public
+datasets, on which it obtains significantly more compact networks than baseline
+methods, with consistent accuracy improvements over the base networks.
+
+## Getting Started
+### Prerequisites
+
 ### **How to Use**
 
 ```bash
