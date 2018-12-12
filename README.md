@@ -26,6 +26,10 @@ We validate our dependent variational beta-Bernoulli dropout on multiple public
 datasets, on which it obtains significantly more compact networks than baseline
 methods, with consistent accuracy improvements over the base networks.
 
+## Prerequsites
+Python 2.7
+Tensorflow >= 1.10
+
 ## Getting Started
 
 Step 1. Download MNIST, CIFAR-10, CIFAR-100
