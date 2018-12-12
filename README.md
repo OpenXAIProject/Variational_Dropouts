@@ -37,9 +37,10 @@ $ TBD
 
 ### Results
 <p float="left">
-  <img src="results/lenet_fc.png" width="400" />
-  <img src="results/lenet_conv.png" width="400" />
+  <img src="figures/lenet_fc.png" width="400" />
+  <img src="figures/lenet_conv.png" width="400" />
 </p>
+<img src="figures/vgg-like.png" width="800" />
 
 <img src="http://xai.unist.ac.kr/static/img/logos/XAIC_logo.png" width="300" height="100">
 

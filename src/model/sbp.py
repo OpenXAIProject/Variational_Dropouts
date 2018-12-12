@@ -1,3 +1,8 @@
+
+# This is extracted from the original implemtation of SBP
+# Please refer to the official source code
+# https://github.com/necludov/group-sparsity-sbp
+
 from layers import *
 from tensorflow.python.ops.distributions import special_math
 
