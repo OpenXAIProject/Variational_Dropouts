@@ -35,6 +35,12 @@ methods, with consistent accuracy improvements over the base networks.
 $ TBD
 ```
 
+### Results
+<p float="left">
+  <img src="src/results/lenet_fc.png" width="400" />
+  <img src="src/results/lenet_conv.png" width="400" />
+</p>
+
 <img src="http://xai.unist.ac.kr/static/img/logos/XAIC_logo.png" width="300" height="100">
 
 # XAI Project
