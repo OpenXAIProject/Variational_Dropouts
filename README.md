@@ -27,12 +27,14 @@ datasets, on which it obtains significantly more compact networks than baseline
 methods, with consistent accuracy improvements over the base networks.
 
 ## Getting Started
-### Prerequisites
 
-### **How to Use**
+Step 1. Download MNIST, CIFAR-10, CIFAR-100
+Step 2. Edit src/utils/paths.py
 
 ```bash
-$ TBD
+$ cd /src/experiments
+$ python run.py --net lenet_fc --mode base
+$ python run.py --net lenet_fc --mode bbd
 ```
 
 ### Results
