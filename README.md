@@ -8,7 +8,7 @@
 
 <b> Update (December 12, 2018)</b> TensorFlow implementation of
 [Adaptive Network Sparsification via Dependent Variational Beta-Benoulli Dropout]
-(https://openreview.net/pdf?id=SylU3jC5Y7)
+(https://arxiv.org/abs/1805.10896)
 
 ## Abstract
 
