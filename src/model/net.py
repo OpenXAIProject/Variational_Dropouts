@@ -6,12 +6,9 @@ class Net(object):
         self.base = []
         self.bbd = []
         self.dbbd = []
-<<<<<<< HEAD
         self.vib = []
-=======
         self.sbp = []
         self.gend = []
->>>>>>> 91bb577b992611f6ff2c20c300f4cc7f993f25aa
 
     def params(self, mode=None, trainable=None):
         params = []
@@ -40,14 +37,12 @@ class Net(object):
         elif mode == 'bbd':
             return self.bbd[l](x, train)
         elif mode == 'dbbd':
-<<<<<<< HEAD
             z_in = self.bbd[l].mask(x, train)
             if mask_list is not None:
                 mask_list.append(self.dbbd[l].mask(x, train))
             return self.dbbd[l](x, train, z_in)
         elif mode == 'vib':
             return self.vib[l](x, train)
-=======
             #z = self.bbd[l].mask(x, train)
             #z *= self.dbbd[l].mask(x, train)
             #return self.dbbd[l](x, train, z=z)
@@ -56,7 +51,6 @@ class Net(object):
             return self.sbp[l](x, train)
         elif mode == 'gend':
             return self.gend[l](x, train)
->>>>>>> 91bb577b992611f6ff2c20c300f4cc7f993f25aa
         else:
             raise ValueError('Invalid mode {}'.format(mode))
 
@@ -66,13 +60,10 @@ class Net(object):
         acc = accuracy(x, y)
         return cent, acc
 
-<<<<<<< HEAD
     def kl(self, mode='bbd'):
         kl = [layer.kl() for layer in getattr(self, mode)]
         return tf.add_n(kl)
 
-    def n_active(self, mode='bbd'):
-=======
     def reg(self, y, train=True):
         key = 'train_probit' if train else 'test_probit'
         cent = [softmax_cross_entropy(getattr(layer, key), y) \
@@ -85,7 +76,6 @@ class Net(object):
         return tf.add_n(kl)
 
     def n_active(self, mode='sbp'):
->>>>>>> 91bb577b992611f6ff2c20c300f4cc7f993f25aa
         return [layer.n_active() for layer in getattr(self, mode)]
 
     def n_active_x(self):

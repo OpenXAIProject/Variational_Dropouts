@@ -2,12 +2,9 @@ from net import Net
 from layers import *
 from bbdropout import BBDropout
 from dbbdropout import DBBDropout
-<<<<<<< HEAD
 from vib import VIB
-=======
 from sbp import SBP
 from gendropout import GenDropout
->>>>>>> 91bb577b992611f6ff2c20c300f4cc7f993f25aa
 
 class LeNetFC(Net):
     def __init__(self, n_units=None, mask=None, thres=1e-3,
@@ -19,16 +16,11 @@ class LeNetFC(Net):
             for i in range(3):
                 self.base.append(Dense(n_units[i],
                     (10 if i==2 else n_units[i+1]), name='dense'+str(i+1)))
-<<<<<<< HEAD
-                self.bbd.append(BBDropout(n_units[i], name='bbd'+str(i+1), thres=thres))
-                self.dbbd.append(DBBDropout(n_units[i], name='dbbd'+str(i+1), thres=thres))
                 self.vib.append(VIB(n_units[i], name='vib'+str(i+1)))
-=======
                 self.bbd.append(BBDropout(n_units[i], name='bbd'+str(i+1)))
                 self.dbbd.append(DBBDropout(n_units[i], name='dbbd'+str(i+1)))
                 self.sbp.append(SBP(n_units[i], name='sbp'+str(i+1)))
                 self.gend.append(GenDropout(n_units[i], name='gend'+str(i+1)))
->>>>>>> 91bb577b992611f6ff2c20c300f4cc7f993f25aa
 
     def __call__(self, x, train, mode='base'):
         x = x if self.mask is None else tf.gather(x, self.mask, axis=1)
@@ -37,7 +29,6 @@ class LeNetFC(Net):
         x = self.base[2](self.apply(x, train, mode, 2))
         return x
 
-<<<<<<< HEAD
     def measure_dbb_runtime(self, x):
         x = tf.gather(x, self.mask, axis=1)
         masks = []
@@ -53,15 +44,6 @@ class LeNetFC(Net):
 
     def build_compressed(self, sess=None, mode='bbd', init=True):
         masks = [layer.mask_ind() for layer in self.bbd]
-=======
-    def build_compressed(self, mode='sbp', sess=None, init=True):
-        if mode == 'sbp':
-            masks = [layer.mask_ind() for layer in self.sbp]
-        elif mode == 'gend':
-            masks = [layer.mask_ind() for layer in self.gend]
-        else:
-            raise NotImplementedError()
->>>>>>> 91bb577b992611f6ff2c20c300f4cc7f993f25aa
         sess = tf.Session() if sess is None else sess
         n_units = sess.run([tf.shape(mask)[0] for mask in masks])
         net = LeNetFC(n_units=n_units, mask=tf.constant(sess.run(masks[0])),
@@ -73,15 +55,9 @@ class LeNetFC(Net):
             for i in range(3):
                 mask_ops += self.base[i].mask_ops(net.base[i],
                         in_mask=masks[i], out_mask=(None if i==2 else masks[i+1]))
-<<<<<<< HEAD
                 mask_ops += self.bbd[i].mask_ops(net.bbd[i], masks[i])
                 if mode == 'dbbd':
                     mask_ops += self.dbbd[i].mask_ops(net.dbbd[i], masks[i])
-=======
-                #mask_ops += self.bbd[i].mask_ops(net.bbd[i], masks[i])
-                #mask_ops += self.sbp[i].mask_ops(net.sbp[i], masks[i])
-                mask_ops += self.gend[i].mask_ops(net.gend[i], masks[i])
->>>>>>> 91bb577b992611f6ff2c20c300f4cc7f993f25aa
             sess.run(mask_ops)
         return net
 
@@ -99,12 +75,9 @@ class LeNetConv(Net):
             for i in range(4):
                 self.bbd.append(BBDropout(n_units[i], name='bbd'+str(i+1)))
                 self.dbbd.append(DBBDropout(n_units[i], name='dbbd'+str(i+1)))
-<<<<<<< HEAD
                 self.vib.append(VIB(n_units[i], name='vib'+str(i+1)))
-=======
                 self.sbp.append(SBP(n_units[i], name='sbp'+str(i+1)))
                 self.gend.append(GenDropout(n_units[i], name='gend'+str(i+1)))
->>>>>>> 91bb577b992611f6ff2c20c300f4cc7f993f25aa
 
     def __call__(self, x, train, mode='base'):
         x = tf.reshape(x, [-1, 1, 28, 28])
@@ -116,18 +89,9 @@ class LeNetConv(Net):
         x = relu(self.base[3](self.apply(x, train, mode, 3)))
         return x
 
-<<<<<<< HEAD
     def build_compressed(self, sess=None, mode='bbd', init=True):
         masks = [layer.mask_ind() for layer in self.bbd]
-=======
-    def build_compressed(self, mode='sbp', sess=None, init=True):
-        if mode == 'sbp':
-            masks = [layer.mask_ind() for layer in self.sbp]
-        elif mode == 'gend':
-            masks = [layer.mask_ind() for layer in self.gend]
-        else:
-            raise NotImplementedError()
->>>>>>> 91bb577b992611f6ff2c20c300f4cc7f993f25aa
+
         sess = tf.Session() if sess is None else sess
         n_units = sess.run([tf.shape(mask)[0] for mask in masks])
 
@@ -151,13 +115,9 @@ class LeNetConv(Net):
                     in_mask=masks[2], out_mask=masks[3])
             mask_ops += self.base[3].mask_ops(net.base[3], in_mask=masks[3])
             for i in range(4):
-<<<<<<< HEAD
                 mask_ops += self.bbd[i].mask_ops(net.bbd[i], masks[i])
                 if mode=='dbbd':
                     mask_ops += self.dbbd[i].mask_ops(net.dbbd[i], masks[i])
-=======
-                mask_ops += self.sbp[i].mask_ops(net.sbp[i], masks[i])
->>>>>>> 91bb577b992611f6ff2c20c300f4cc7f993f25aa
             sess.run(mask_ops)
         return net
 
