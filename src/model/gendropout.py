@@ -7,7 +7,7 @@ def ber_concrete(temp, p_logits, n_samples=None):
     return sigmoid((logit(u) + p_logits)/temp)
 
 class GenDropout(object):
-    def __init__(self, n_in, alpha=1e-3, beta=0.5, thres=1e-3,
+    def __init__(self, n_in, alpha=1e-4, beta=0.5, thres=1e-3,
              name='gendropout', reuse=None):
         self.n_in = n_in
         self.alpha = alpha
@@ -16,7 +16,7 @@ class GenDropout(object):
         with tf.variable_scope(name, reuse=reuse):
             self.k_logit = tf.get_variable('k_logit', shape=[n_in],
                         #initializer=tf.random_uniform_initializer(-2.0, 2.0),
-                        initializer=tf.constant_initializer(0.8),
+                        initializer=tf.constant_initializer(0.5413),
                         trainable=True)
             #self.k_clip = tf.clip_by_value(self.k, 0.0, 1.0)
             self.k = sigmoid(self.k_logit)
