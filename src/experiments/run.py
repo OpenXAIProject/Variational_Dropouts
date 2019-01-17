@@ -169,8 +169,9 @@ def bbd_train():
     base_vars = net.params('base')
     base_trn_vars = net.params('base', trainable=True)
     bbd_vars = net.params('bbd')
-    kl = net.kl()
-    n_active = net.n_active()
+
+    kl = net.kl(mode='bbd')
+    n_active = net.n_active(mode='bbd')
     loss = cent + kl/NUM_TRAIN + 1e-4*l2_loss(base_trn_vars)
     global_step = tf.train.get_or_create_global_step()
     if args.net == 'lenet_fc' or args.net == 'lenet_conv':
@@ -232,8 +233,8 @@ def bbd_train():
 def bbd_test():
     logfile = open(os.path.join(bbd_dir, 'test.log'), 'w', 0)
     cent, acc = net.classify(tx, ty, mode='bbd', train=False)
-    kl = net.kl()
-    n_active = net.n_active()
+    kl = net.kl(mode='bbd')
+    n_active = net.n_active(mode='bbd')
     logger = Logger('cent', 'acc')
     sess = tf.Session()
     tf.train.Saver(net.params('base')+net.params('bbd')).restore(
@@ -352,7 +353,7 @@ def dbbd_train():
     dbbd_trn_vars = net.params('dbbd', trainable=True)
     all_vars = net.params()
     kl = net.kl('dbbd')
-    n_active = net.n_active()
+    n_active = net.n_active(mode='dbbd')
     n_active_x = net.n_active_x()
     loss = cent + kl/NUM_TRAIN + 1e-4*l2_loss(base_trn_vars)
     global_step = tf.train.get_or_create_global_step()
@@ -423,9 +424,9 @@ def dbbd_train():
 def dbbd_test():
     logfile = open(os.path.join(dbbd_dir, 'test.log'), 'w', 0)
     cent, acc = net.classify(tx, ty, mode='dbbd', train=False)
-    kl = net.kl()
-    n_active = net.n_active()
-    n_active_x = net.n_active_x()
+    kl = net.kl(mode='dbbd')
+    n_active = net.n_active(mode='dbbd')
+    n_active_x = net.n_active_x(mode='dbbd')
     logger = Logger('cent', 'acc')
     sess = tf.Session()
     tf.train.Saver(net.params()).restore(
@@ -600,8 +601,6 @@ def gend_train():
         train_logger.show(header='train', epoch=epoch, logfile=logfile)
 
         test_logger.clear()
-        print(sess.run(tf.nn.sigmoid(gend_vars[10]))[0:10])
-        print(sess.run(tf.get_collection('z')[10])[0:10])
 
         for it in range(1, n_test_batches+1):
             test_logger.record(sess.run(test_to_run))
@@ -611,7 +610,6 @@ def gend_train():
         line += 'n_active: ' + str(np_n_active)
         print(line)
         logfile.write(line+'\n')
-        print()
         logfile.write('\n')
 
         if epoch%args.save_freq == 0:

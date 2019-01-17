@@ -73,7 +73,7 @@ class VGG(Net):
         x = x if self.mask is None else tf.gather(x, self.mask, axis=1)
         x = tf.layers.dropout(x, 0.5, training=train) if mode=='base' else x
         x = self.base[2*13](self.apply(x, train, mode, 13, mask_list=mask_list))
-        x = relu(self.base[2*13+1](x, train))
+        x = relu(self.base[2*13+1](x, False) if mode =='sbp' else self.base[2*13+1](x, train))
 
         x = tf.layers.dropout(x, 0.5, training=train) if mode=='base' else x
         x = self.base[-1](self.apply(x, train, mode, 14, mask_list=mask_list))

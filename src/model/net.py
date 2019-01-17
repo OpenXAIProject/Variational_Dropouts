@@ -43,10 +43,6 @@ class Net(object):
             return self.dbbd[l](x, train, z_in)
         elif mode == 'vib':
             return self.vib[l](x, train)
-            #z = self.bbd[l].mask(x, train)
-            #z *= self.dbbd[l].mask(x, train)
-            #return self.dbbd[l](x, train, z=z)
-            return self.dbbd[l](x, train)
         elif mode == 'sbp':
             return self.sbp[l](x, train)
         elif mode == 'gend':
@@ -60,7 +56,9 @@ class Net(object):
         acc = accuracy(x, y)
         return cent, acc
 
-    def kl(self, mode='bbd'):
+    def kl(self, mode=None):
+        if mode is None:
+            raise ValueError('Invalide mode {}'.format(mode))
         kl = [layer.kl() for layer in getattr(self, mode)]
         return tf.add_n(kl)
 
@@ -71,11 +69,9 @@ class Net(object):
         cent = tf.add_n(cent)/float(len(cent))
         return cent
 
-    def kl(self, mode='sbp'):
-        kl = [layer.kl() for layer in getattr(self, mode)]
-        return tf.add_n(kl)
-
-    def n_active(self, mode='sbp'):
+    def n_active(self, mode=None):
+        if mode is None:
+            raise ValueError('Invalide mode {}'.format(mode))
         return [layer.n_active() for layer in getattr(self, mode)]
 
     def n_active_x(self):
