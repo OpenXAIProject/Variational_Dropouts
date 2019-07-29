@@ -120,24 +120,3 @@ class LeNetConv(Net):
                     mask_ops += self.dbbd[i].mask_ops(net.dbbd[i], masks[i])
             sess.run(mask_ops)
         return net
-
-if __name__ == '__main__':
-    import os
-    import numpy as np
-
-    os.environ['CUDA_VISIBLE_DEVICES'] = '0'
-    x = tf.placeholder(tf.float32, [None, 784])
-    net = LeNetConv()
-    sess = tf.Session()
-    saver = tf.train.Saver(net.get_params('base')+net.get_params('bbd'))
-    saver.restore(sess, os.path.join('../results/lenet_conv/bbd/run0', 'model'))
-
-    cnet = net.build_compressed(sess)
-
-    x = tf.placeholder(tf.float32, [None, 784])
-    np_x = np.random.rand(1, 784)
-    np_y1 = sess.run(net(x, train=False, mode='bbd'), {x:np_x})
-    print np_y1
-    np_y2 = sess.run(cnet(x, train=False, mode='bbd'), {x:np_x})
-    print np_y2
-    print np.mean(np_y1-np_y2)

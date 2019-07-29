@@ -353,7 +353,7 @@ def dbbd_train():
     dbbd_trn_vars = net.params('dbbd', trainable=True)
     all_vars = net.params()
     kl = net.kl('dbbd')
-    n_active = net.n_active(mode='dbbd')
+    n_active = net.n_active(mode='bbd')
     n_active_x = net.n_active_x()
     loss = cent + kl/NUM_TRAIN + 1e-4*l2_loss(base_trn_vars)
     global_step = tf.train.get_or_create_global_step()
